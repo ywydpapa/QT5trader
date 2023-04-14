@@ -1,11 +1,8 @@
 import sys
-import time
-
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import pykorbit
 import datetime
-import threading
 
 
 form_class = uic.loadUiType("mywindow.ui")[0]
@@ -54,15 +51,17 @@ class MyWindow(QMainWindow, form_class):
     def comboSelect(self):
         self.textBrowser.clear()
         self.textBrowser_2.clear()
+        self.label_3.clear()
+        self.label_6.clear()
+        self.label_7.clear()
         coins = self.comboBox.currentText()
-        self.textBrowser.append(str(coins))
         price3 = pykorbit.get_current_price(str(coins))
         order3 = pykorbit.get_orderbook(str(coins))
-        self.textBrowser.append(str(format(price3, ",")))
+        self.label_9.setText(str(format(price3, ",")))
         bids = order3["bids"]
         asks = order3["asks"]
         timestmp = order3["timestamp"]
-        self.textBrowser.append(str(datetime.datetime.fromtimestamp(timestmp / 1000)))
+        self.label_11.setText(str(datetime.datetime.fromtimestamp(timestmp / 1000)))
         self.textBrowser.append("*** BIDS ******")
         bidamt = 0.0
         for bidlist in bids:
@@ -70,6 +69,7 @@ class MyWindow(QMainWindow, form_class):
             bidamt = bidamt + float(bidlist[1])
         self.textBrowser.append("Bid Amount")
         self.textBrowser.append(str(bidamt))
+        self.label_6.setText(str(format(bidamt,",")))
         self.textBrowser.append("**************************")
         self.textBrowser_2.append("**** ASKS ****")
         askamt =0.0
@@ -78,7 +78,13 @@ class MyWindow(QMainWindow, form_class):
             askamt = askamt + float(asklist[1])
         self.textBrowser_2.append("ASK Amount")
         self.textBrowser_2.append(str(askamt))
+        self.label_7.setText(str(format(askamt, ",")))
         self.textBrowser_2.append("************************")
+        if askamt >= bidamt :
+            self.label_3.setText("하락추세")
+        else:
+            self.label_3.setText("상승추세")
+
 
 
 app = QApplication(sys.argv)
