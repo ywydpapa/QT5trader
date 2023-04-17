@@ -21,26 +21,37 @@ class MyWindow(QMainWindow, form_class):
         coinlist = pykorbit.get_tickers()
         for coins in coinlist:
             self.textBrowser.append(str(coins))
+            self.textBrowser_2.append(str(coins))
             price3 = pykorbit.get_current_price(str(coins))
             order3 = pykorbit.get_orderbook(str(coins))
             self.textBrowser.append(str(format(price3, ",")))
+            self.textBrowser_2.append(str(format(price3, ",")))
             bids = order3["bids"]
             asks = order3["asks"]
             timestmp = order3["timestamp"]
             self.textBrowser.append(str(datetime.datetime.fromtimestamp(timestmp / 1000)))
+            self.textBrowser_2.append(str(datetime.datetime.fromtimestamp(timestmp / 1000)))
             self.textBrowser.append("**** BIDS ********")
+            bidamt = 0.0
             for bidlist in bids:
-                self.textBrowser.append(str(bidlist))
+                bidamt = bidamt + float(bidlist[1])
+            self.textBrowser.append("Bid Amount")
+            self.textBrowser.append(str(bidamt))
             self.textBrowser.append("******************")
             self.textBrowser_2.append("******ASKS ********")
+            askamt = 0.0
             for asklist in asks:
-                self.textBrowser_2.append(str(asklist))
-            self.textBrowser_2.append(" ")
+                askamt = askamt + float(asklist[1])
+            self.textBrowser_2.append("ASK Amount")
+            self.textBrowser_2.append(str(askamt))
             self.textBrowser_2.append("***********************")
 
     def btn2_clicked(self):
         self.textBrowser.clear()
         self.textBrowser_2.clear()
+        self.label_3.clear()
+        self.label_6.clear()
+        self.label_7.clear()
 
     def setCombo(self):
         self.comboBox.clear()
