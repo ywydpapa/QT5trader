@@ -16,7 +16,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton.clicked.connect(self.btn_clicked)
         self.pushButton_2.clicked.connect(self.btn2_clicked)
         self.pushButton_3.clicked.connect(self.comboSelect)
-        self.actionExit.triggered.connect(self.appexit)
+        self.actionExit.triggered.connect(self.appExit)
 
     def btn_clicked(self):
         coinlist = pykorbit.get_tickers()
@@ -65,8 +65,8 @@ class MyWindow(QMainWindow, form_class):
         for coins in coinlist:
             self.comboBox.addItem(str(coins))
 
-    def appexit(self,QCloseEvent):
-        re = QMessageBox.question(self, "종료 확인", "종료 하시겠습니까?",
+    def apEexit(self,QCloseEvent):
+        re = QMessageBox.question(self, "Exit App.", "종료 하시겠습니까?",
                                   QMessageBox.Yes | QMessageBox.No)
         if re == QMessageBox.Yes:
             QCloseEvent.accept()
