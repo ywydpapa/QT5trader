@@ -65,7 +65,7 @@ class MyWindow(QMainWindow, form_class):
         for coins in coinlist:
             self.comboBox.addItem(str(coins))
 
-    def apEexit(self,QCloseEvent):
+    def appExit(self,QCloseEvent):
         re = QMessageBox.question(self, "Exit App.", "종료 하시겠습니까?",
                                   QMessageBox.Yes | QMessageBox.No)
         if re == QMessageBox.Yes:
