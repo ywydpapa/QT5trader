@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import pykorbit
 import datetime
+import pymysql
+from dotenv import load_dotenv
 
 
 form_class = uic.loadUiType("mywindow.ui")[0]
@@ -61,9 +63,11 @@ class MyWindow(QMainWindow, form_class):
 
     def setCombo(self):
         self.comboBox.clear()
+        self.comboBox_2.clear()
         coinlist = pykorbit.get_tickers()
         for coins in coinlist:
             self.comboBox.addItem(str(coins))
+            self.comboBox_2.addItem(str(coins))
 
     def appExit(self,QCloseEvent):
         re = QMessageBox.question(self, "Exit App.", "종료 하시겠습니까?",
